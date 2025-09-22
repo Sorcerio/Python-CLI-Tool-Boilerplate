@@ -81,8 +81,8 @@ def startCli():
         # Create subparser for tool
         toolParser = commandParsers.add_parser(
             tool.TOOL_NAME,
-            help=tool.TOOL_HELP,
-            formatter_class=argparse.ArgumentDefaultsHelpFormatter
+            help=tool.TOOL_HELP
+            # formatter_class=argparse.ArgumentDefaultsHelpFormatter # NOTE: Enable as desired
         )
         tool.setupParser(toolParser)
 

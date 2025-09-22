@@ -41,59 +41,29 @@ class ConfigManager:
             return tomllib.load(f)
 
     # Functions
-    def get(self, *keys) -> Optional[Union[dict[str, Any], list[Any], Any]]:
+    def get(self, *keys, fallback: Optional[Union[KeyError, Any]] = KeyError) -> Optional[Union[dict[str, Any], list[Any], Any]]:
         """
         Retrieve a value from the configuration using a sequence of `keys`.
 
-        keys: A sequence of keys to traverse the configuration dictionary.
+        *keys: A sequence of keys to traverse the configuration dictionary.
+        fallback: Optional value to return if a key along the `*keys` sequence is not found. If the `KeyError` type is provided, a `KeyError` will be raised instead.
 
         Returns the value found at the specified `keys`.
         """
         # Go find it
         data = self.data
-
         for key in keys:
-            if not isinstance(data, dict) or key not in data:
-                raise KeyError(f"Key '{key}' not found in configuration.")
+            # Check if the key exists
+            if (not isinstance(data, dict)) or (key not in data):
+                # Check if no fallback is provided
+                if fallback == KeyError:
+                    raise KeyError(f"Key '{key}' not found in configuration.")
+
+                # Return the fallback value
+                return fallback
+
+            # Go deeper
             data = data[key]
 
+        # Return the found data
         return data
-
-    # TODO: Implement writing once PEP gets around to supporting it (never)
-    # def set(self, *keys, value):
-    #     """
-    #     Set a value in the configuration using a sequence of keys.
-
-    #     keys: A sequence of keys to traverse the configuration dictionary.
-    #     value: The value to set at the specified `keys`.
-    #     """
-    #     # Go find it and set it
-    #     data = self.data
-
-    #     for key in keys[:-1]:
-    #         if key not in data or not isinstance(data[key], dict):
-    #             data[key] = {}
-    #         data = data[key]
-
-    #     data[keys[-1]] = value
-
-    # def save(self, toPath: Optional[Union[str, Path]] = None, overwrite: bool = False):
-    #     """
-    #     Save the current configuration to a file.
-
-    #     toPath: Alternative path to save the configuration file. If `None`, will save to the original path.
-    #     overwrite: If `True`, will overwrite the existing file. If `False`, will raise an error if the file already exists.
-    #     """
-    #     # Resolve the path
-    #     if toPath:
-    #         toPath = Path(toPath)
-    #     else:
-    #         toPath = self.path
-
-    #     # Check if exists
-    #     if toPath.exists() and not overwrite:
-    #         raise FileExistsError(f"Config file already exists at: {toPath}")
-
-    #     # Save the configuration file
-    #     with open(self.path, "w") as f:
-    #         tomllib. # Wow... this doesn't support this.
