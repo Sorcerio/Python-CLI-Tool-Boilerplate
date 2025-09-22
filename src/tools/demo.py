@@ -23,11 +23,12 @@ class DemoTool(BaseTool):
 
     # CLI Functions
     @staticmethod
-    def setupParser(parser: argparse.ArgumentParser):
+    def setupParser(parser: argparse.ArgumentParser, config: Optional[ConfigManager]):
         """
         Sets up the given `parser` with arguments for this tool.
 
         parser: The parser to apply the arguments to.
+        config: The config manager to use for the tool or `None` if not present.
         """
         # Add a demo argument
         parser.add_argument(

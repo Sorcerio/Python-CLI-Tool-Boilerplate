@@ -61,6 +61,14 @@ def collectTools() -> list[BaseTool]:
     return tools
 
 def startCli():
+    # Load config
+    config: Optional[ConfigManager] = None
+    try:
+        config = ConfigManager(configPath=CONFIG_PATH)
+    except FileNotFoundError as e:
+        if not SILENCE_MISSING_CONFIG:
+            print(f"Configuration file not found (`{CONFIG_PATH.absolute()}`). If this is intentional, set `SILENCE_MISSING_CONFIG` to `True` in `cli.py`.")
+
     # Prepare parser
     parser = argparse.ArgumentParser(
         description="Command line interface for PYTHON_BOILER_PLATE.",
@@ -84,18 +92,10 @@ def startCli():
             help=tool.TOOL_HELP
             # formatter_class=argparse.ArgumentDefaultsHelpFormatter # NOTE: Enable as desired
         )
-        tool.setupParser(toolParser)
+        tool.setupParser(toolParser, config)
 
     # Parse args
     args = parser.parse_args()
-
-    # Load config
-    config: Optional[ConfigManager] = None
-    try:
-        config = ConfigManager(configPath=CONFIG_PATH)
-    except FileNotFoundError as e:
-        if not SILENCE_MISSING_CONFIG:
-            print(f"Configuration file not found (`{CONFIG_PATH.absolute()}`). If this is intentional, set `SILENCE_MISSING_CONFIG` to `True` in `cli.py`.")
 
     # Decide what tool to run
     if args.command is None:
