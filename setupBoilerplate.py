@@ -4,6 +4,7 @@ Setup Boilerplate
 Utility to assist in setting up a new Python CLI Tools Boilerplate project.
 """
 # MARK: Imports
+import shutil
 from pathlib import Path
 
 # MARK: Constants
@@ -24,6 +25,7 @@ FILES_PACKAGE_NAME_SYS = [
 FILES_DEV_ID = [
     Path("LICENSE.txt").absolute()
 ]
+FILES_MODULE_DIR = Path("clitoolsboilerplate").absolute()
 
 # MARK: Functions
 def setup(
@@ -45,7 +47,7 @@ def setup(
     # * [x] Replace `[[PACKAGE_NAME_USER_FACING]]` in all files with the *user facing* name of your project.
     # * [x] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
     # * [x] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
-    # * [ ] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
+    # * [x] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
     # * [ ] Remove the `README.md`.
     # * [ ] Rename the `BOILERPLATE_README.md` to `README.md`.
     # * [ ] Print the user should edit the `pyproject.toml` as needed.
@@ -57,7 +59,9 @@ def setup(
     _checkString(moduleDesc)
 
     # Verify all files exist
-    allFiles = (FILES_MODULE_DESC + FILES_PACKAGE_NAME_USER + FILES_PACKAGE_NAME_SYS + FILES_DEV_ID)
+    allFiles = (FILES_MODULE_DESC + FILES_PACKAGE_NAME_USER + FILES_PACKAGE_NAME_SYS + FILES_DEV_ID + [
+        FILES_MODULE_DIR
+    ])
     _checkFiles(allFiles)
 
     # Report
@@ -83,6 +87,13 @@ def setup(
 
     # Report
     print("Package names replaced.")
+
+    # Rename the package directory
+    newModuleDir = FILES_MODULE_DIR.parent / packageNameSys
+    shutil.move(FILES_MODULE_DIR, newModuleDir)
+
+    # Report
+    print(f"Module directory renamed to: {newModuleDir.relative_to(Path.cwd())}")
 
     # TODO: The rest
 
