@@ -8,7 +8,8 @@ from pathlib import Path
 
 # MARK: Constants
 FILES_MODULE_DESC = [
-    Path("BOILERPLATE_README.md").absolute()
+    Path("BOILERPLATE_README.md").absolute(),
+    Path("pyproject.toml").absolute()
 ]
 FILES_PACKAGE_NAME_USER = [
     Path("BOILERPLATE_README.md").absolute(),
@@ -25,22 +26,35 @@ FILES_DEV_ID = [
 ]
 
 # MARK: Functions
-def setup(onlyVerify: bool = False) -> None:
+def setup(
+    packageNameRich: str,
+    packageNameSys: str,
+    moduleDesc: str,
+    onlyVerify: bool = False
+) -> None:
     """
     Set up the boilerplate project by guiding the user through necessary changes.
 
+    packageNameRich: The user facing name of the package like `"My Cool Tool"`.
+    packageNameSys: The system facing name of the package like `"mycooltool"`.
+    moduleDesc: A brief, user facing description of the module's function.
     onlyVerify: If `True`, only verify that all boilerplate files are present then exit.
     """
     # TODO: The following:
-    # * [ ] Replace `[[MODULE_DESCRIPTION]]` with a description of your module's function.
-    # * [ ] Replace `[[PACKAGE_NAME_USER_FACING]]` in all files with the *user facing* name of your project.
-    # * [ ] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
-    # * [ ] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
+    # * [x] Replace `[[MODULE_DESCRIPTION]]` with a description of your module's function.
+    # * [x] Replace `[[PACKAGE_NAME_USER_FACING]]` in all files with the *user facing* name of your project.
+    # * [x] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
+    # * [x] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
     # * [ ] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
     # * [ ] Remove the `README.md`.
     # * [ ] Rename the `BOILERPLATE_README.md` to `README.md`.
     # * [ ] Print the user should edit the `pyproject.toml` as needed.
     # * [ ] Print the user should remove the `setupBoilerplate.py` file.
+
+    # Check all the inputs
+    _checkString(packageNameRich)
+    _checkString(packageNameSys)
+    _checkString(moduleDesc)
 
     # Verify all files exist
     allFiles = (FILES_MODULE_DESC + FILES_PACKAGE_NAME_USER + FILES_PACKAGE_NAME_SYS + FILES_DEV_ID)
@@ -52,15 +66,23 @@ def setup(onlyVerify: bool = False) -> None:
         print("Verification complete. Exiting.")
         return
 
-    # Get module description
-    moduleDescription = _getUserInput("Enter a brief description of your module's function: ")
-
     # Replace module description
     for filePath in FILES_MODULE_DESC:
-        _replaceInFile(filePath, "[[MODULE_DESCRIPTION]]", moduleDescription)
+        _replaceInFile(filePath, "[[MODULE_DESCRIPTION]]", moduleDesc)
 
     # Report
     print("Module description replaced.")
+
+    # Replace the user facing package name
+    for filePath in FILES_PACKAGE_NAME_USER:
+        _replaceInFile(filePath, "[[PACKAGE_NAME_USER_FACING]]", packageNameRich)
+
+    # Replace the system facing package name
+    for filePath in FILES_PACKAGE_NAME_SYS:
+        _replaceInFile(filePath, "clitoolsboilerplate", packageNameSys)
+
+    # Report
+    print("Package names replaced.")
 
     # TODO: The rest
 
@@ -79,11 +101,12 @@ def _checkFiles(filePaths: list[Path]):
             error += f"\t* {missingFile}\n"
         raise FileNotFoundError(error)
 
-def _getUserInput(prompt: str) -> str:
+def _checkString(s: str):
     """
-    Get user input with the given `prompt`.
+    Check that the string `s` is not empty or whitespace only.
     """
-    return input(prompt).strip()
+    if not s or s.isspace():
+        raise ValueError(f"Provided string '{s}' is empty or whitespace only.")
 
 def _replaceInFile(filePath: Path, toReplace: str, replaceWith: str) -> None:
     """
@@ -110,6 +133,23 @@ if __name__ == "__main__":
         description="Setup the Python CLI Tools Boilerplate project."
     )
 
+    # Required arguments
+    parser.add_argument(
+        "packageNameRich",
+        type=str,
+        help="The user facing name of the package like 'My Cool Tool'."
+    )
+    parser.add_argument(
+        "packageNameSys",
+        type=str,
+        help="The system facing name of the package like 'mycooltool'."
+    )
+    parser.add_argument(
+        "moduleDesc",
+        type=str,
+        help="A description of the module's function."
+    )
+
     # Optional arguments
     parser.add_argument(
         "-v", "--verify",
@@ -121,4 +161,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Run setup
-    setup()
+    setup(
+        packageNameRich=args.packageNameRich,
+        packageNameSys=args.packageNameSys,
+        moduleDesc=args.moduleDesc,
+        onlyVerify=args.verify
+    )
