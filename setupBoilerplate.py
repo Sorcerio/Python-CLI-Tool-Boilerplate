@@ -8,12 +8,15 @@ import shutil
 from pathlib import Path
 
 # MARK: Constants
+FILES_MODULE_DIR = Path("clitoolsboilerplate").absolute()
+FILES_README_SETUP = Path("README.md").absolute()
+FILES_README_BOILERPLATE = Path("BOILERPLATE_README.md").absolute()
 FILES_MODULE_DESC = [
-    Path("BOILERPLATE_README.md").absolute(),
+    FILES_README_BOILERPLATE,
     Path("pyproject.toml").absolute()
 ]
 FILES_PACKAGE_NAME_USER = [
-    Path("BOILERPLATE_README.md").absolute(),
+    FILES_README_BOILERPLATE,
     Path("config.toml").absolute(),
     Path("clitoolsboilerplate/run.py").absolute()
 ]
@@ -25,7 +28,6 @@ FILES_PACKAGE_NAME_SYS = [
 FILES_DEV_ID = [
     Path("LICENSE.txt").absolute()
 ]
-FILES_MODULE_DIR = Path("clitoolsboilerplate").absolute()
 
 # MARK: Functions
 def setup(
@@ -48,8 +50,8 @@ def setup(
     # * [x] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
     # * [x] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
     # * [x] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
-    # * [ ] Remove the `README.md`.
-    # * [ ] Rename the `BOILERPLATE_README.md` to `README.md`.
+    # * [x] Remove the `README.md`.
+    # * [x] Rename the `BOILERPLATE_README.md` to `README.md`.
     # * [ ] Print the user should edit the `pyproject.toml` as needed.
     # * [ ] Print the user should remove the `setupBoilerplate.py` file.
 
@@ -60,7 +62,9 @@ def setup(
 
     # Verify all files exist
     allFiles = (FILES_MODULE_DESC + FILES_PACKAGE_NAME_USER + FILES_PACKAGE_NAME_SYS + FILES_DEV_ID + [
-        FILES_MODULE_DIR
+        FILES_MODULE_DIR,
+        FILES_README_SETUP,
+        FILES_README_BOILERPLATE
     ])
     _checkFiles(allFiles)
 
@@ -95,7 +99,16 @@ def setup(
     # Report
     print(f"Module directory renamed to: {newModuleDir.relative_to(Path.cwd())}")
 
-    # TODO: The rest
+    # Reorganize the readmes
+    FILES_README_SETUP.unlink()
+    FILES_README_BOILERPLATE.rename(FILES_README_SETUP)
+
+    # Report
+    print("README files reorganized.")
+
+    # Print final instructions
+    print("\nSetup complete.")
+    print("The `setupBoilerplate.py` file can now be removed from the project files.")
 
 def _checkFiles(filePaths: list[Path]):
     """
