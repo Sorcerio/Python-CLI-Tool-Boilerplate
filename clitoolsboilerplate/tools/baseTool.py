@@ -1,5 +1,5 @@
 """
-PYTHON_BOILER_PLATE Base Tool
+Base Tool
 
 `BaseTool` definition for command line tools.
 """

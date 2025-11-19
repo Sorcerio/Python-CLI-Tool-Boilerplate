@@ -1,5 +1,5 @@
 """
-PYTHON_BOILER_PLATE Demo Tool
+Demo Tool
 
 An example of using the `BaseTool` class to create a command line tool.
 """

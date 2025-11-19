@@ -1,7 +1,7 @@
 """
-PYTHON_BOILER_PLATE Command Line Interface
+[[PACKAGE_NAME_USER_FACING]] Command Line Interface
 
-Command line starter for PYTHON_BOILER_PLATE.
+Command line starter for [[PACKAGE_NAME_USER_FACING]].
 """
 # MARK: Imports
 import inspect
@@ -73,7 +73,7 @@ def cli():
 
     # Prepare parser
     parser = argparse.ArgumentParser(
-        description="Command line interface for PYTHON_BOILER_PLATE."
+        description="Command line interface for [[PACKAGE_NAME_USER_FACING]]."
     )
 
     # Prepare command subparser group
