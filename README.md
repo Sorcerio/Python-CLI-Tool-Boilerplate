@@ -1,5 +1,7 @@
 # Python CLI Tools Boilerplate Template
 
+> Version 2.0.0
+
 Python Boiler Plate is a module boilerplate with built-in CLI tool support using `argparse`.
 
 ## Setup
