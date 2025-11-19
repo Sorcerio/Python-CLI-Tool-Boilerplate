@@ -52,6 +52,16 @@ def setup(onlyVerify: bool = False) -> None:
         print("Verification complete. Exiting.")
         return
 
+    # Get module description
+    moduleDescription = _getUserInput("Enter a brief description of your module's function: ")
+
+    # Replace module description
+    for filePath in FILES_MODULE_DESC:
+        _replaceInFile(filePath, "[[MODULE_DESCRIPTION]]", moduleDescription)
+
+    # Report
+    print("Module description replaced.")
+
     # TODO: The rest
 
 def _checkFiles(filePaths: list[Path]):
@@ -68,6 +78,27 @@ def _checkFiles(filePaths: list[Path]):
         for missingFile in missingFiles:
             error += f"\t* {missingFile}\n"
         raise FileNotFoundError(error)
+
+def _getUserInput(prompt: str) -> str:
+    """
+    Get user input with the given `prompt`.
+    """
+    return input(prompt).strip()
+
+def _replaceInFile(filePath: Path, toReplace: str, replaceWith: str) -> None:
+    """
+    Replace all occurrences of `toReplace` with `replaceWith` in the file at `filePath`.
+    """
+    # Read file
+    with open(filePath, "r", encoding="utf-8") as file:
+        content = file.read()
+
+    # Replace content
+    content = content.replace(toReplace, replaceWith)
+
+    # Write file
+    with open(filePath, "w", encoding="utf-8") as file:
+        file.write(content)
 
 # MARK: Execution
 if __name__ == "__main__":
