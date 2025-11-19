@@ -1,6 +1,8 @@
-# PYTHON_BOILER_PLATE Command Line Interface
-# Command line starter for PYTHON_BOILER_PLATE.
+"""
+PYTHON_BOILER_PLATE Command Line Interface
 
+Command line starter for PYTHON_BOILER_PLATE.
+"""
 # MARK: Imports
 import inspect
 import importlib
@@ -60,7 +62,7 @@ def collectTools() -> list[BaseTool]:
 
     return tools
 
-def startCli():
+def cli():
     # Load config
     config: Optional[ConfigManager] = None
     try:
@@ -71,8 +73,7 @@ def startCli():
 
     # Prepare parser
     parser = argparse.ArgumentParser(
-        description="Command line interface for PYTHON_BOILER_PLATE.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+        description="Command line interface for PYTHON_BOILER_PLATE."
     )
 
     # Prepare command subparser group

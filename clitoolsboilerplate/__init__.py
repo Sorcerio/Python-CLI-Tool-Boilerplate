@@ -1,3 +1,3 @@
 # PYTHON_BOILER_PLATE Package
-from .cli import startCli
+from .run import cli
 from .config import ConfigManager

@@ -1,6 +1,3 @@
-def main():
-    print("Hello from clitoolsboilerplate!")
-
-
+import clitoolsboilerplate
 if __name__ == "__main__":
-    main()
+    clitoolsboilerplate.startCli()

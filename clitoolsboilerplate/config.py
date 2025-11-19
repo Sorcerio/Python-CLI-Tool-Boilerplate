@@ -1,6 +1,8 @@
-# Config Manager
-# Class to manage file-based configuration settings.
+"""
+Config Manager
 
+Class to manage file-based configuration settings.
+"""
 # MARK: Imports
 import tomllib
 from typing import Union, Optional, Any
@@ -67,3 +69,5 @@ class ConfigManager:
 
         # Return the found data
         return data
+
+    # NOTE: Set is not implemented because Python's `tomllib` does not support writing TOML files.

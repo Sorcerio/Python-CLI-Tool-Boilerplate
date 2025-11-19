@@ -1,25 +1,22 @@
-# PYTHON_BOILER_PLATE Demo Tool
-# An example of using the `BaseTool` class to create a command line tool.
+"""
+PYTHON_BOILER_PLATE Base Tool
 
+`BaseTool` definition for command line tools.
+"""
 # MARK: Imports
 import argparse
 from typing import Optional
 
-from .baseTool import BaseTool
 from ..config import ConfigManager
 
 # MARK: Classes
-class DemoTool(BaseTool):
+class BaseTool:
     """
-    Demo tool for command line tools.
+    Base class for command line tools.
     """
     # Constants
-    TOOL_NAME = "demo"
-    TOOL_HELP = "Demo tool for command line tools."
-
-    # Initializer
-    def __init__(self, isA: bool):
-        self.isA = isA
+    TOOL_NAME = "base_tool"
+    TOOL_HELP = "Base tool for command line tools."
 
     # CLI Functions
     @staticmethod
@@ -30,34 +27,25 @@ class DemoTool(BaseTool):
         parser: The parser to apply the arguments to.
         config: The config manager to use for the tool or `None` if not present.
         """
-        # Add a demo argument
-        parser.add_argument(
-            "-d",
-            "--demo",
-            action="store_true",
-            help="Run the demo."
-        )
+        raise NotImplementedError("setupParser() must be implemented in the subclass.")
 
     @classmethod
-    def fromArgs(cls, args: argparse.Namespace, config: Optional[ConfigManager]) -> "DemoTool":
+    def fromArgs(cls, args: argparse.Namespace, config: Optional[ConfigManager]) -> "BaseTool":
         """
         Creates an instance of this tool from the given `args`.
 
         args: The parser arguments to create the tool from.
-        config: The config manager to use for the tool.
+        config: The config manager to use for the tool or `None` if not present.
 
         Returns an instance of this tool.
         """
-        return cls(args.demo)
+        raise NotImplementedError("fromArgs() must be implemented in the subclass.")
 
     def _run(self, args: argparse.Namespace, config: Optional[ConfigManager]):
         """
         Runs the tool as configured by the CLI.
 
         args: The parser arguments to create the tool from.
-        config: The config manager to use for the tool.
+        config: The config manager to use for the tool or `None` if not present.
         """
-        print("Running demo tool!")
-        print(f"Is A: {self.isA}")
-        print(f"Args: {args}")
-        print(f"Config: {config}")
+        raise NotImplementedError("_run() must be implemented in the subclass.")

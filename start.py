@@ -1,8 +1,8 @@
 # PYTHON_BOILER_PLATE Starter
 
 # MARK: Imports
-import src
+import clitoolsboilerplate
 
 # MARK: Execution
 if __name__ == "__main__":
-    src.startCli()
+    clitoolsboilerplate.startCli()
