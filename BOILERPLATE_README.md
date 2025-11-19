@@ -2,13 +2,8 @@
 
 [[MODULE_DESCRIPTION]]
 
-## Local Setup
+## Usage
 
-TODO: UPDATE THESE INSTRUCTIONS!
+This repository assumes you are using [uv](https://docs.astral.sh/uv/) Python package manager.
 
-1. Create a Python 3.11 *or higher* virtual environment: `python -m venv .venv`
-1. Enter the environment:
-    * Windows: `.\.venv\Scripts\activate`
-    * MacOS/Linux: `source .venv/bin/activate`
-1. Install the requirements: `pip install -r requirements.txt`
-1. View the help: `python start.py --help`
+To run the CLI, collect the program's dependencies, and view the help run: `uv run main.py -h`
