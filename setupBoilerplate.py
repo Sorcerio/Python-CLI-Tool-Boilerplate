@@ -44,17 +44,6 @@ def setup(
     moduleDesc: A brief, user facing description of the module's function.
     onlyVerify: If `True`, only verify that all boilerplate files are present then exit.
     """
-    # TODO: The following:
-    # * [x] Replace `[[MODULE_DESCRIPTION]]` with a description of your module's function.
-    # * [x] Replace `[[PACKAGE_NAME_USER_FACING]]` in all files with the *user facing* name of your project.
-    # * [x] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
-    # * [x] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
-    # * [x] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
-    # * [x] Remove the `README.md`.
-    # * [x] Rename the `BOILERPLATE_README.md` to `README.md`.
-    # * [ ] Print the user should edit the `pyproject.toml` as needed.
-    # * [ ] Print the user should remove the `setupBoilerplate.py` file.
-
     # Check all the inputs
     _checkString(packageNameRich)
     _checkString(packageNameSys)

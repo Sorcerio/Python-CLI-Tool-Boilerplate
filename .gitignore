@@ -3,6 +3,9 @@
 __pycache__/
 *.pyc
 
+# Git
+repo.zip
+
 # Platform
 *.DS_Store
 *.swp
