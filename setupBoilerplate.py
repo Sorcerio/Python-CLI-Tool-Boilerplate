@@ -6,13 +6,88 @@ Utility to assist in setting up a new Python CLI Tools Boilerplate project.
 # MARK: Imports
 from pathlib import Path
 
+# MARK: Constants
+FILES_MODULE_DESC = [
+    Path("BOILERPLATE_README.md").absolute()
+]
+FILES_PACKAGE_NAME_USER = [
+    Path("BOILERPLATE_README.md").absolute(),
+    Path("config.toml").absolute(),
+    Path("clitoolsboilerplate/run.py").absolute()
+]
+FILES_PACKAGE_NAME_SYS = [
+    Path("main.py").absolute(),
+    Path("pyproject.toml").absolute(),
+    Path("uv.lock").absolute()
+]
+FILES_DEV_ID = [
+    Path("LICENSE.txt").absolute()
+]
+
 # MARK: Functions
-def setup():
+def setup(onlyVerify: bool = False) -> None:
     """
     Set up the boilerplate project by guiding the user through necessary changes.
+
+    onlyVerify: If `True`, only verify that all boilerplate files are present then exit.
     """
-    pass
+    # TODO: The following:
+    # * [ ] Replace `[[MODULE_DESCRIPTION]]` with a description of your module's function.
+    # * [ ] Replace `[[PACKAGE_NAME_USER_FACING]]` in all files with the *user facing* name of your project.
+    # * [ ] Replace `[[DEVELOPER_IDENTIFIER]]` with your name or other developer identifier for licensing purposes.
+    # * [ ] Replace `clitoolsboilerplate` in `pyproject.toml` with the *system facing* name of the project.
+    # * [ ] Rename the `clitoolsboilerplate/` directory to the *system facing* name of the project.
+    # * [ ] Remove the `README.md`.
+    # * [ ] Rename the `BOILERPLATE_README.md` to `README.md`.
+    # * [ ] Print the user should edit the `pyproject.toml` as needed.
+    # * [ ] Print the user should remove the `setupBoilerplate.py` file.
+
+    # Verify all files exist
+    allFiles = (FILES_MODULE_DESC + FILES_PACKAGE_NAME_USER + FILES_PACKAGE_NAME_SYS + FILES_DEV_ID)
+    _checkFiles(allFiles)
+
+    # Report
+    print(f"All {len(allFiles)} boilerplate files to edit are present.")
+    if onlyVerify:
+        print("Verification complete. Exiting.")
+        return
+
+    # TODO: The rest
+
+def _checkFiles(filePaths: list[Path]):
+    """
+    Check that all files in `filePaths` exist.
+    """
+    missingFiles: list[Path] = []
+    for filePath in filePaths:
+        if not filePath.exists():
+            missingFiles.append(filePath)
+
+    if missingFiles:
+        error = "\nBoilerplate files are missing:\n"
+        for missingFile in missingFiles:
+            error += f"\t* {missingFile}\n"
+        raise FileNotFoundError(error)
 
 # MARK: Execution
 if __name__ == "__main__":
-    pass
+    # CLI Imports
+    import argparse
+
+    # Setup setup CLI
+    parser = argparse.ArgumentParser(
+        description="Setup the Python CLI Tools Boilerplate project."
+    )
+
+    # Optional arguments
+    parser.add_argument(
+        "-v", "--verify",
+        action="store_true",
+        help="Verify that all boilerplate files are present and then exit. No further steps will be performed."
+    )
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    # Run setup
+    setup()
