@@ -1,6 +1,8 @@
-# PYTHON_BOILER_PLATE Demo Tool
-# An example of using the `BaseTool` class to create a command line tool.
+"""
+Demo Tool
 
+An example of using the `BaseTool` class to create a command line tool.
+"""
 # MARK: Imports
 import argparse
 from typing import Optional

@@ -1,6 +1,8 @@
-# PYTHON_BOILER_PLATE Base Tool
-# BaseTool definition for command line tools.
+"""
+Base Tool
 
+`BaseTool` definition for command line tools.
+"""
 # MARK: Imports
 import argparse
 from typing import Optional
