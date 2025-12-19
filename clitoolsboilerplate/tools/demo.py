@@ -8,7 +8,7 @@ import argparse
 from typing import Optional
 
 from .baseTool import BaseTool
-from ..config import ConfigManager
+from ..config import Config
 
 # MARK: Classes
 class DemoTool(BaseTool):
@@ -25,7 +25,7 @@ class DemoTool(BaseTool):
 
     # CLI Functions
     @staticmethod
-    def setupParser(parser: argparse.ArgumentParser, config: Optional[ConfigManager]):
+    def setupParser(parser: argparse.ArgumentParser, config: Optional[Config]):
         """
         Sets up the given `parser` with arguments for this tool.
 
@@ -41,7 +41,7 @@ class DemoTool(BaseTool):
         )
 
     @classmethod
-    def fromArgs(cls, args: argparse.Namespace, config: Optional[ConfigManager]) -> "DemoTool":
+    def fromArgs(cls, args: argparse.Namespace, config: Optional[Config]) -> "DemoTool":
         """
         Creates an instance of this tool from the given `args`.
 
@@ -52,7 +52,7 @@ class DemoTool(BaseTool):
         """
         return cls(args.demo)
 
-    def _run(self, args: argparse.Namespace, config: Optional[ConfigManager]):
+    def _run(self, args: argparse.Namespace, config: Optional[Config]):
         """
         Runs the tool as configured by the CLI.
 

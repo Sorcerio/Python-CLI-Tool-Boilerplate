@@ -5,11 +5,11 @@ Class to manage file-based configuration settings.
 """
 # MARK: Imports
 import tomllib
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, Type
 from pathlib import Path
 
 # MARK: Classes
-class ConfigManager:
+class Config:
     """
     Class to manage file-based configuration settings.
     """
@@ -24,7 +24,7 @@ class ConfigManager:
 
     # Python Functions
     def __repr__(self) -> str:
-        return f"ConfigManager(path={self.path.absolute()}, data={self.data})"
+        return f"Config(path={self.path.absolute()}, data={self.data})"
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -69,5 +69,33 @@ class ConfigManager:
 
         # Return the found data
         return data
+
+    def getDict(self, types: Optional[tuple[Type, ...]], *keys, fallback: Optional[Union[KeyError, dict[str, Any]]] = KeyError) -> dict[str, Any]:
+        """
+        Retrieve a dictionary from the configuration using a sequence of `keys`.
+
+        types: A tuple of the types acceptable to be *values* in the dictionary. Provide `None` explicitly to skip type checking.
+        *keys: A sequence of keys to traverse the configuration dictionary.
+        fallback: Optional value to return if a key along the `*keys` sequence is not found. If the `KeyError` type is provided, a `KeyError` will be raised instead.
+
+        Returns the dictionary found at the specified `keys` or throws a `TypeError` if the value `types` do not match.
+        """
+        # Get the data
+        data = self.get(*keys, fallback=fallback)
+
+        # Check if it's a dictionary
+        if not isinstance(data, dict):
+            raise TypeError(f"Expected a dictionary at `{'.'.join(keys)}`, but found: {type(data)}")
+
+        # Validate the types of the values
+        if types is not None:
+            for key, value in data.items():
+                for t in types:
+                    if not isinstance(value, t):
+                        raise TypeError(f"Expected value of `{', '.join(t.__name__ for t in types)}` for key '{key}', but found: {type(value)}")
+
+        # Return the dictionary
+        return data
+
 
     # NOTE: Set is not implemented because Python's `tomllib` does not support writing TOML files.

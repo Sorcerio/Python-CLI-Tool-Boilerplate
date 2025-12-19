@@ -7,7 +7,7 @@ Base Tool
 import argparse
 from typing import Optional
 
-from ..config import ConfigManager
+from ..config import Config
 
 # MARK: Classes
 class BaseTool:
@@ -20,7 +20,7 @@ class BaseTool:
 
     # CLI Functions
     @staticmethod
-    def setupParser(parser: argparse.ArgumentParser, config: Optional[ConfigManager]):
+    def setupParser(parser: argparse.ArgumentParser, config: Optional[Config]):
         """
         Sets up the given `parser` with arguments for this tool.
 
@@ -30,7 +30,7 @@ class BaseTool:
         raise NotImplementedError("setupParser() must be implemented in the subclass.")
 
     @classmethod
-    def fromArgs(cls, args: argparse.Namespace, config: Optional[ConfigManager]) -> "BaseTool":
+    def fromArgs(cls, args: argparse.Namespace, config: Optional[Config]) -> "BaseTool":
         """
         Creates an instance of this tool from the given `args`.
 
@@ -41,7 +41,7 @@ class BaseTool:
         """
         raise NotImplementedError("fromArgs() must be implemented in the subclass.")
 
-    def _run(self, args: argparse.Namespace, config: Optional[ConfigManager]):
+    def _run(self, args: argparse.Namespace, config: Optional[Config]):
         """
         Runs the tool as configured by the CLI.
 

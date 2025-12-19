@@ -1,2 +1,2 @@
 from .run import cli
-from .config import ConfigManager
+from .config import Config

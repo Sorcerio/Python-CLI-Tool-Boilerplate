@@ -10,7 +10,7 @@ import argparse
 from pathlib import Path
 from typing import Optional, Union
 
-from .config import ConfigManager
+from .config import Config
 from .tools.baseTool import BaseTool
 
 # MARK: Constants
@@ -64,9 +64,9 @@ def collectTools() -> list[BaseTool]:
 
 def cli():
     # Load config
-    config: Optional[ConfigManager] = None
+    config: Optional[Config] = None
     try:
-        config = ConfigManager(configPath=CONFIG_PATH)
+        config = Config(configPath=CONFIG_PATH)
     except FileNotFoundError as e:
         if not SILENCE_MISSING_CONFIG:
             print(f"Configuration file not found (`{CONFIG_PATH.absolute()}`). If this is intentional, set `SILENCE_MISSING_CONFIG` to `True` in `cli.py`.")
