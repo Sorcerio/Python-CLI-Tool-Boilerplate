@@ -19,12 +19,12 @@ class Config:
         configPath: Path to the configuration file. If `None`, will attempt to load `config.toml` from the current working directory.
         """
         # Prep parameters
-        self.path = (Path(configPath) if configPath else Path.cwd() / "config.toml").absolute()
+        self.path = (Path(configPath) if configPath else Path.cwd() / "config.toml").resolve()
         self.data = self._loadConfig()
 
     # Python Functions
     def __repr__(self) -> str:
-        return f"Config(path={self.path.absolute()}, data={self.data})"
+        return f"Config(path={self.path.resolve()}, data={self.data})"
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -96,6 +96,5 @@ class Config:
 
         # Return the dictionary
         return data
-
 
     # NOTE: Set is not implemented because Python's `tomllib` does not support writing TOML files.

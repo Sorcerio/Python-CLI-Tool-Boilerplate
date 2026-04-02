@@ -7,9 +7,11 @@ Command line starter for [[PACKAGE_NAME_USER_FACING]].
 import inspect
 import importlib
 import argparse
+import logging
 from pathlib import Path
 from typing import Optional, Union
 
+from . import utils
 from .config import Config
 from .tools.baseTool import BaseTool
 
@@ -63,17 +65,29 @@ def collectTools() -> list[BaseTool]:
     return tools
 
 def cli():
+    """
+    Run the [[PACKAGE_NAME_USER_FACING]] command line interface.
+    """
     # Load config
     config: Optional[Config] = None
     try:
         config = Config(configPath=CONFIG_PATH)
     except FileNotFoundError as e:
         if not SILENCE_MISSING_CONFIG:
-            print(f"Configuration file not found (`{CONFIG_PATH.absolute()}`). If this is intentional, set `SILENCE_MISSING_CONFIG` to `True` in `cli.py`.")
+            print(f"Configuration file not found (`{CONFIG_PATH.resolve()}`). If this is intentional, set `SILENCE_MISSING_CONFIG` to `True` in `cli.py`.")
 
     # Prepare parser
     parser = argparse.ArgumentParser(
         description="Command line interface for [[PACKAGE_NAME_USER_FACING]]."
+    )
+
+    # Add global args
+    parser.add_argument(
+        "--log-level",
+        type=str,
+        default="info",
+        choices=[key.lower() for key in utils.LOG_MANAGER.LOG_LEVELS.keys()],
+        help="Logging level (default: %(default)s)."
     )
 
     # Prepare command subparser group
@@ -98,6 +112,12 @@ def cli():
     # Parse args
     args = parser.parse_args()
 
+    # Setup logging
+    utils.LOG_MANAGER.setLogLevel(utils.LOG_MANAGER.LOG_LEVELS.get(
+        str(args.log_level).upper(),
+        logging.INFO
+    ))
+
     # Decide what tool to run
     if args.command is None:
         # No tool specified
@@ -111,5 +131,5 @@ def cli():
             return
 
     # No tool found
-    print(f"Tool '{args.command}' not found.\n")
+    print(f"Tool '{args.command}' not found.\n") # TODO: ALL THE PRINTS
     parser.print_help()
