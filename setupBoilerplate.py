@@ -25,7 +25,8 @@ FILES_PACKAGE_NAME_SYS = [
     Path("main.py").resolve(),
     Path("pyproject.toml").resolve(),
     Path("uv.lock").resolve(),
-    Path("clitoolsboilerplate/utils.py").resolve()
+    Path("clitoolsboilerplate/utils.py").resolve(),
+    Path(".gitignore").resolve()
 ]
 FILES_DEV_ID = [
     Path("LICENSE.txt").resolve()

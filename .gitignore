@@ -9,3 +9,6 @@ repo.zip
 # Platform
 *.DS_Store
 *.swp
+
+# Logs
+clitoolsboilerplate.log
