@@ -8,25 +8,28 @@ import shutil
 from pathlib import Path
 
 # MARK: Constants
-FILES_MODULE_DIR = Path("clitoolsboilerplate").absolute()
-FILES_README_SETUP = Path("README.md").absolute()
-FILES_README_BOILERPLATE = Path("BOILERPLATE_README.md").absolute()
+FILES_MODULE_DIR = Path("clitoolsboilerplate").resolve()
+FILES_README_SETUP = Path("README.md").resolve()
+FILES_README_BOILERPLATE = Path("BOILERPLATE_README.md").resolve()
 FILES_MODULE_DESC = [
     FILES_README_BOILERPLATE,
-    Path("pyproject.toml").absolute()
+    Path("pyproject.toml").resolve()
 ]
 FILES_PACKAGE_NAME_USER = [
     FILES_README_BOILERPLATE,
-    Path("config.toml").absolute(),
-    Path("clitoolsboilerplate/run.py").absolute()
+    Path("config.toml").resolve(),
+    Path("clitoolsboilerplate/run.py").resolve(),
+    Path("clitoolsboilerplate/utils.py").resolve()
 ]
 FILES_PACKAGE_NAME_SYS = [
-    Path("main.py").absolute(),
-    Path("pyproject.toml").absolute(),
-    Path("uv.lock").absolute()
+    Path("main.py").resolve(),
+    Path("pyproject.toml").resolve(),
+    Path("uv.lock").resolve(),
+    Path("clitoolsboilerplate/utils.py").resolve(),
+    Path(".gitignore").resolve()
 ]
 FILES_DEV_ID = [
-    Path("LICENSE.txt").absolute()
+    Path("LICENSE.txt").resolve()
 ]
 
 # MARK: Functions

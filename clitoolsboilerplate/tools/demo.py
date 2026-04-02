@@ -8,6 +8,7 @@ import argparse
 from typing import Optional
 
 from .baseTool import BaseTool
+from .. import utils
 from ..config import Config
 
 # MARK: Classes
@@ -59,7 +60,7 @@ class DemoTool(BaseTool):
         args: The parser arguments to create the tool from.
         config: The config manager to use for the tool.
         """
-        print("Running demo tool!")
-        print(f"Is A: {self.isA}")
-        print(f"Args: {args}")
-        print(f"Config: {config}")
+        utils.LOGGER.info("Running demo tool!")
+        utils.LOGGER.info(f"Is A: {self.isA}")
+        utils.LOGGER.info(f"Args: {args}")
+        utils.LOGGER.info(f"Config: {config}")
